@@ -1,0 +1,64 @@
+{# templates/location/new.html.twig #}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Location</title>
+    <style media="screen">
+    #map{
+      width: 100%;
+      height: 400px;
+    }
+    </style>
+  </head>
+  <body>
+
+    <div id="content">
+            {% block body %}
+            {% block body_container_main_content %}
+
+
+            <form method="get" action="/get">
+              <label>Address:</label>
+              <input id="address" type="text" name="address" placeholder="Enter the address here">
+              <br><br>
+              <input type="submit" name="submitForm" value="Submit">
+
+{% if lati is defined %}
+                <p>Longitude: <span id="longField">{{longi}}</span></p>
+                <p>Latitude: <span id="latField">{{lati}}</span></p>
+                <label for="iconselected">Select Marker: </label>
+                <select id="iconselected" onchange="initMap()" name="selectIcon">
+                  <option selected value="1">Default</option>
+                  <option value="2">Custom Arrow</option>
+                </select>
+                <br><br>
+                <label for="colorSelected">Color for arrow: </label>
+                <select disabled id="colorSelected" onchange="initMap()" name="selectCustomColor">
+                  <option selected value="Yellow">Yellow</option>
+                  <option value="Blue">Blue</option>
+                </select>
+                <br><br>
+{% endif %}
+
+
+
+            <div id="map"></div>
+            {% block javascripts %}
+            {% if lati is defined %}
+            <script type="text/javascript">
+              var latitude = {{lati}};
+              var longitude = {{longi}};
+            </script>
+
+            {% endif %}
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHUp32-b_Jv6cYCCiR1vJ5JovvzFyXVn8&callback=initMap"></script>
+            <script src="{{ asset('location.js') }}"></script>
+            {% endblock %}
+            {% endblock %}
+          {% endblock %}
+
+        </div>
+
+  </body>
+</html>
