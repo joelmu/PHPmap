@@ -21,8 +21,8 @@
             <form method="get" action="/get">
               <label>Address:</label>
               <input id="address" type="text" name="address" placeholder="Enter the address here">
-              <br><br>
               <input type="submit" name="submitForm" value="Submit">
+              <br><br>
 
 {% if lati is defined %}
                 <p>Longitude: <span id="longField">{{longi}}</span></p>
@@ -45,13 +45,6 @@
 
             <div id="map"></div>
             {% block javascripts %}
-            {% if lati is defined %}
-            <script type="text/javascript">
-              var latitude = {{lati}};
-              var longitude = {{longi}};
-            </script>
-
-            {% endif %}
             <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHUp32-b_Jv6cYCCiR1vJ5JovvzFyXVn8&callback=initMap"></script>
             <script src="{{ asset('location.js') }}"></script>
             {% endblock %}

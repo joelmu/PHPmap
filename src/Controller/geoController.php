@@ -1,7 +1,7 @@
 <?php
 // APIKEY is AIzaSyAHUp32-b_Jv6cYCCiR1vJ5JovvzFyXVn8
 
-// Google API function modified from: https://wordpress.stackexchange.com/questions/224711/integrating-php-into-javascript-to-display-map-markers-with-google-api
+// Google API function modified from: https://stackoverflow.com/questions/3807963/how-to-get-longitude-and-latitude-of-any-address
 
 namespace App\Controller;
 
@@ -38,12 +38,11 @@ public function getLatLong(){
     if (isset($_GET['submitForm'])) {
 
         $address = urlencode($_GET["address"]);
-        //Formatted address
         $formattedAddr = str_replace(' ','+',$address);
-        //Send request and receive json data by address
-        $geocodeFromAddr = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key=AIzaSyAHUp32-b_Jv6cYCCiR1vJ5JovvzFyXVn8");
+        $geocodeFromAddr = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address={$formattedAddr}&key=AIzaSyAHUp32-b_Jv6cYCCiR1vJ5JovvzFyXVn8");
         $output = json_decode($geocodeFromAddr, true);
-if ($output['status']=='OK') {
+        
+        if ($output['status']=='OK') {
         $latitude = isset($output['results'][0]['geometry']['location']['lat']) ? $output['results'][0]['geometry']['location']['lat'] : "";
         $longitude = isset($output['results'][0]['geometry']['location']['lng']) ? $output['results'][0]['geometry']['location']['lng'] : "";
 
@@ -67,7 +66,6 @@ if ($output['status']=='OK') {
          return false;
         }
     }else{
-      echo "<strong>ERROR: {$output['status']}</strong>";
          return false;
     }
 }
